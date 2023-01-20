@@ -1,0 +1,33 @@
+### Creating a Beauty Store Database ###
+### Columns indclude an ID number, Item name, Retail Price, Wholesale Price, and amount of inventory in stock ###
+
+### Creating the database ###
+
+CREATE TABLE Products (id INTEGER PRIMARY KEY, Item TEXT, Retail_Price INTEGER, Wholesale_Price INTEGER, Inventory INTEGER);
+
+INSERT INTO Products VALUES (1, "eyeshadow", 15, 10, 20);
+INSERT INTO Products VALUES (2, "mascara", 12, 9, 40);
+INSERT INTO Products VALUES (3, "primer", 15, 10, 15);
+INSERT INTO Products VALUES (4, "foundation", 11, 8, 25);
+INSERT INTO Products VALUES (5, "concealer", 8, 5, 45);
+INSERT INTO Products VALUES (6, "lashes", 9, 4, 15);
+INSERT INTO Products VALUES (7, "nails", 5, 2, 20);
+INSERT INTO Products VALUES (8, "lipstick", 5, 3, 50);
+INSERT INTO Products VALUES (9, "blush", 8, 4, 50);
+INSERT INTO Products VALUES (10, "bronzer", 8, 5, 20);
+INSERT INTO Products VALUES (11, "chapstick", 4, 1, 40);
+INSERT INTO Products VALUES (12, "gloss", 4, 2, 15);
+INSERT INTO Products VALUES (13, "lipliner", 6, 3, 30);
+INSERT INTO Products VALUES (14, "nail_polish", 6, 3, 30);
+INSERT INTO Products VALUES (15, "exfoliator",  11, 7, 20);
+
+### Returns products from lowest gross profit to highest gross profit ###
+
+SELECT * FROM Products 
+ORDER BY Retail_Price 
+
+
+### Returns products where inventory has fallen below 25 units ###
+
+SELECT * FROM Products
+WHERE Inventory < 25 
