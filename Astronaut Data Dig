@@ -1,7 +1,7 @@
 #### This project evaluated Astronaut data to gain further understanding/insights ####
 
 
-
+### Here is the data to create the database ###
 
 CREATE TABLE astronauts(
    Name                TEXT PRIMARY KEY,
