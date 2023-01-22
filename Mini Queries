@@ -140,7 +140,7 @@ WHERE artist IN
 WHERE genre = 'Pop')
 
 
-
+#### Exercise using the GROUP BY/HAVING statements and Aggregate statements ###
 
 CREATE TABLE books (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -181,12 +181,48 @@ INSERT INTO books (author, title, words)
 INSERT INTO books (author, title, words)
     VALUES ("J.R.R. Tolkien", "Return of the King", 134462);
 
+
+### Determining which authors have written a total of more than one million words ###
+
 SELECT author, SUM(words) AS total_words 
 FROM books 
 GROUP BY author
 HAVING total_words > 1000000;
 
+# Determining which author has written an average of more than 150,000 words per book ###
+
 SELECT author, AVG(words) 
 AS average_words FROM books
 GROUP BY author
 HAVING average_words > 150000
+
+
+
+
+
+
+#### Exercise in CASE statements ####
+
+
+### Create column for each row indicating the letter grade for each student based on number grade ###
+
+SELECT name, number_grade,
+    CASE
+        WHEN number_grade >90 THEN "A"
+        WHEN number_grade >80 THEN "B"
+        WHEN number_grade >70 THEN "C"
+        ELSE "F"
+    END AS "letter_grade"
+FROM student_grades;
+
+### Determine the amount of students receieving any given grade ###
+
+SELECT COUNT(*),
+    CASE
+        WHEN number_grade >90 THEN "A"
+        WHEN number_grade >80 THEN "B"
+        WHEN number_grade >70 THEN "C"
+        ELSE "F"
+    END AS "letter_grade"
+FROM student_grades
+GROUP BY letter_grade;
