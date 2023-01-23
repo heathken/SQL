@@ -1,0 +1,107 @@
+---- This is a project using fake data about the characters from How I Met Your Mother ---
+
+
+
+
+--- CHARACTERS TABLE --- 
+ 
+ CREATE TABLE characters (id INTEGER PRIMARY KEY, name TEXT, age INTEGER, relationship_status TEXT);
+ 
+INSERT INTO characters VALUES (1, "Ted", 35, "single");
+INSERT INTO characters VALUES (2, "Robin", 33, "single");
+INSERT INTO characters VALUES (3, "Barney", 37, "single");
+INSERT INTO characters VALUES (4, "Marshall", 34, "married");
+INSERT INTO characters VALUES (5, "Lily", 34, "married");
+INSERT INTO characters VALUES (6, "Ranjit", 51, "married");
+
+--- CHARACTER'S CAREERS AND SALARY TABLE ---
+
+CREATE TABLE career (character_id INTEGER PRIMARY KEY, job TEXT, yearly_salary INTEGER);
+
+INSERT INTO career VALUES (1, "architect", 80000);
+INSERT INTO career VALUES (2, "journalist", 70000);
+INSERT INTO career VALUES (3, "intnl_businessman", 250000);
+INSERT INTO career VALUES (4, "lawyer", 150000);
+INSERT INTO career VALUES (5, "teacher", 55000);
+INSERT INTO career VALUES (6, "cab_driver", 65000);
+
+--- CHARACTERS' FAVORITE PASTIMES TABLE ---
+
+CREATE TABLE pastimes (activity_id INTEGER PRIMARY KEY, character_id INTEGER, activity TEXT, activity_cost INTEGER);
+
+INSERT INTO pastimes VALUES (1, 1, "dating", 75000); 
+INSERT INTO pastimes VALUES (2, 1, "watching_star_wars", 20);
+INSERT INTO pastimes VALUES (3, 2, "dating", 75000);
+INSERT INTO pastimes VALUES (4, 2, "shooting", 60000);
+INSERT INTO pastimes VALUES (5, 2, "laser_tag", 75000);
+INSERT INTO pastimes VALUES (6, 3, "being_awesome", 200000);
+INSERT INTO pastimes VALUES (7, 3, "laser_tag", 75000);
+INSERT INTO pastimes VALUES (8, 3, "dating", 75000);
+INSERT INTO pastimes VALUES (9, 4, "hockey", 15000);
+INSERT INTO pastimes VALUES (10, 4, "giving_advice", 0);
+INSERT INTO pastimes VALUES (11, 4, "watching_star_wars", 20);
+INSERT INTO pastimes VALUES (12, 4, "being_nice", 0);
+INSERT INTO pastimes VALUES (13, 5, "painting", 500);
+INSERT INTO pastimes VALUES (14, 5, "giving_advice", 0);
+INSERT INTO pastimes VALUES (15, 6, "being_nice", 0);
+INSERT INTO pastimes VALUES (16, 6, "saying_hello", 0);
+INSERT INTO pastimes VALUES (17, 6, "giving_advice", 0);
+INSERT INTO pastimes VALUES (18, 1, "laser_tag", 75000);
+INSERT INTO pastimes VALUES (19, 5, "shooting", 60000);
+
+
+
+--- QUERY OF CHARACTERS AND THEIR JOBS AND SALARIES ---
+
+SELECT characters.name, career.job, career.yearly_salary
+FROM characters
+LEFT JOIN career
+ON characters.id = career.character_id
+ORDER BY yearly_salary DESC;
+
+--- QUERY OF PARTICIPANTS IN ALL ACTIVITES ---
+
+SELECT pastimes.activity, GROUP_CONCAT(characters.name) as participants
+FROM pastimes
+LEFT JOIN characters
+ON pastimes.character_id = characters.id
+GROUP BY pastimes.activity;
+
+--- CHARACTERS AND THEIR INDIVIDUAL ACTIVITIES  ---
+
+
+SELECT characters.name, GROUP_CONCAT(pastimes.activity) AS preferred_activity
+FROM characters
+LEFT JOIN pastimes
+ON characters.id = pastimes.character_id
+GROUP BY characters.name;
+
+
+
+--- QUERY OF ACTIVITIES WITH AT LEAST 3 PARTICIPANTS ---
+
+SELECT pastimes.activity, GROUP_CONCAT(characters.name) as participants
+FROM pastimes
+LEFT JOIN characters
+ON pastimes.character_id = characters.id
+GROUP BY pastimes.activity
+HAVING COUNT(*) >=3;
+
+--- QUERY DETERMINING IF CHARACTER CAN PARTICIPATE IN AN ACTIVITY BASED ON YEARLY SALARY ---
+
+SELECT pastimes.activity, characters.name,
+
+    CASE
+        WHEN career.yearly_salary < pastimes.activity_cost
+            THEN "broke"
+        WHEN career.yearly_salary > pastimes.activity_cost
+            THEN "ballin"
+        END AS "affordability"
+        
+FROM pastimes
+
+LEFT JOIN characters
+ON pastimes.character_id = characters.id
+LEFT JOIN career
+ON career.character_id = characters.id
+ORDER BY pastimes.activity, affordability
