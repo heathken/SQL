@@ -3,17 +3,20 @@
 
 
 --- 1. How many orders were placed in January? ---
+
 SELECT SUM(Quantity) FROM JanSales
 
 
 
 --- 2. How many of those orders were for an iPhone? ---
+
 SELECT SUM(quantity) FROM JanSales
 WHERE Product = 'iPhone'
 
 
 
 --- 3. Select the customer account numbers for all the orders that were placed in February. ---
+
 SELECT customers.acctnum
 FROM customers
 
@@ -24,6 +27,7 @@ AND orderid <> 'Order ID'
 
 
 --- 4. Which product was the cheapest one sold in January, and what was the price? ---
+
 SELECT Product, price 
 FROM JanSales
 ORDER BY price ASC LIMIT 1
@@ -31,6 +35,7 @@ ORDER BY price ASC LIMIT 1
 
 
 --- 5. What is the total revenue for each product sold in January? (Revenue can be calculated using the number of products sold and the price of the products)---
+
 SELECT Product, SUM(quantity) * price AS revenue
 FROM JanSales
 GROUP BY Product
@@ -38,6 +43,7 @@ GROUP BY Product
 
 
 --- 6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?---
+
 SELECT Product, SUM(Quantity), price, SUM(Quantity)*price AS total_revenue 
 FROM FebSales
 
@@ -59,12 +65,34 @@ AND orderid <> 'Order ID'
 
 
 
---- List all the products sold in Los Angeles in February, and include how many of each were sold. ---
+--- 8. List all the products sold in Los Angeles in February, and include how many of each were sold. ---
 
 SELECT FebSales.Product, SUM(Quantity)
 FROM FebSales
 WHERE location LIKE '%Los Angeles%'
 GROUP BY Product
+
+
+
+--- 9. Which locations in New York received at least 3 orders in January, and how many orders did they each receive? ---
+
+SELECT DISTINCT location, COUNT(orderID)
+FROM BIT_DB.JanSales
+WHERE location LIKE '%NY%'
+GROUP BY location
+HAVING COUNT(orderID) >= 3
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
