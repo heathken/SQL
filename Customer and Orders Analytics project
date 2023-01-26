@@ -59,7 +59,12 @@ AND orderid <> 'Order ID'
 
 
 
+--- List all the products sold in Los Angeles in February, and include how many of each were sold. ---
 
+SELECT FebSales.Product, SUM(Quantity)
+FROM FebSales
+WHERE location LIKE '%Los Angeles%'
+GROUP BY Product
 
 
 
