@@ -84,6 +84,13 @@ HAVING COUNT(orderID) >= 3
 
 
 
+--- 10. How many of each type of headphone were sold in February? ---
+
+SELECT FebSales.Product, SUM(FebSales.Quantity) AS quantity
+FROM FebSaleS
+WHERE Product LIKE '%Headphones%'
+GROUP BY Product
+
 
 
 
