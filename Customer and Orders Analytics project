@@ -92,6 +92,44 @@ WHERE Product LIKE '%Headphones%'
 GROUP BY Product
 
 
+--- 11. What was the average amount spent per account in February? ---
+
+SELECT SUM(FebSales.price*FebSales.Quantity) / COUNT (customers.acctnum) AS average_spent
+FROM customers
+LEFT JOIN FebSales
+ON customers.order_id = FebSales.orderID
+WHERE length(orderid) = 6 
+AND orderid <> 'Order ID'
+
+
+
+
+--- 12. What was the average quantity of products purchased per account in February? Overall average, not the average for each account individually. ---
+
+
+SELECT SUM(FebSales.Quantity) / COUNT (customers.acctnum) AS average_spent
+FROM customers
+LEFT JOIN FebSales
+ON customers.order_id = FebSales.orderID
+WHERE length(orderid) = 6 
+AND orderid <> 'Order ID'
+
+
+
+
+
+--- 13. Which product brought in the most revenue in January and how much revenue did it bring in total?
+
+SELECT product, SUM(Quantity * price) as total_order_sale
+FROM JanSales
+GROUP BY product
+ORDER BY total_order_sale DESC
+
+
+
+
+
+
 
 
 
