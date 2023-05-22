@@ -1,0 +1,6 @@
+
+
+
+
+SELECT * FROM BIT_DB.Spotifydata
+ORDER BY popularity DESC
