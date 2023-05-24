@@ -1,6 +1,39 @@
 
 
 
+--- Select all songs and sort by popularity ---
 
 SELECT * FROM BIT_DB.Spotifydata
 ORDER BY popularity DESC
+
+
+
+--- Select all songs with a danceability rating greater than .6, sorted by popularity ---
+
+SELECT * FROM BIT_DB.Spotifydata
+WHERE danceability > .6
+ORDER BY popularity DESC
+
+
+
+--- Select all songs, grouped by artist name ---
+
+SELECT * FROM BIT_DB.Spotifydata
+ORDER BY artist_name
+
+
+
+--- Selects all artists and creates new column "total_songs" indicating how many songs a single artist has on the charts, 
+sorted in descending order ---
+
+SELECT artist_name, COUNT(artist_name)
+AS total_songs FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY total_songs DESC
+
+
+
+--- Selects all information about songs by artist Olivia Rodrigo ---
+
+SELECT * FROM BIT_DB.Spotifydata
+WHERE artist_name = "Olivia Rodrigo"
